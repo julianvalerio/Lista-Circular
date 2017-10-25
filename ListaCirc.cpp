@@ -26,25 +26,84 @@ void libera_lista(Elem* li){
    }
 }
 
+int valor_posicao(Elem *li, int pos){
+    if(li == NULL){
+        cout << "Lista Vazia, posição inválida!";
+        return -1;
+    }
+    int tamanho = tamanho_lista(li);
+    if(pos <= tamanho && pos > 0){
+        int cont = 1;
+        Elem *aux = li;
+        int valor;
+        while(aux->prox != li){
+            if(cont == pos){
+                valor = aux->valor;
+                return valor;
+            }
+            cont++;
+            aux = aux->prox;
+        }
+    }else{
+        cout << "Posição Inválida!";
+        return -1;
+    }
+}
 
-
-
+int consulta_lista_pos(Elem* li, int pos){
+    if(li == NULL || pos <= 0)
+        return 0;
+    Elem *no = li;
+    int i = 1;
+    while(no->prox != li && i < pos){
+        no = no->prox;
+        i++;
+    }
+    if(i != pos)
+        return 0;
+    else{
+        cout<< "Valor do elemento na posicao: "<<  no->valor;
+        return 1;
+    }
+}
 
 int consulta_lista_mat(Elem* li, int val){
     if(li == NULL)
         return 0;
     Elem *no = li;
-    while(no->prox != li && no->valor != val)
+    int contador = 0;
+    while(no->prox != li && no->valor != val){
+        contador++;
         no = no->prox;
-    if(no->valor != val)
+    }
+    if(no->valor != val){
+        cout << "Valor não encontrado!";
         return 0;
+    }
     else{
-        cout<< no->valor;
-        return 1;
+        cout<< "Valor encontrado na posição "<< contador;
+        return 0;
     }
 }
 
-
+Elem* insere_lista_final(Elem* li, int val){
+    Elem *no = new Elem;
+    if(no == NULL)
+        return li;
+    no->valor = val;
+    if(li == NULL){//lista vazia: insere início
+        li = no;
+        no->prox = no;
+    }else{
+        Elem *aux = li;
+        while(aux->prox != li){
+            aux = aux->prox;
+        }
+        aux->prox = no;
+        no->prox = li;
+    }
+    return li;
+}
 
 Elem* insere_lista_inicio(Elem* li, int val){
     Elem *no = (Elem*) malloc(sizeof(Elem));
@@ -66,6 +125,36 @@ Elem* insere_lista_inicio(Elem* li, int val){
     return li;
 }
 
+Elem* insere_lista_ordenada(Elem* li, int val){
+    Elem *no = (Elem*) malloc(sizeof(Elem));
+    if(no == NULL)
+        return li;
+    no->valor = val;
+    if(li == NULL){//insere início
+        li = no;
+        no->prox = no;
+        return li;
+    }
+    else{
+        if(li->valor > val){//insere início
+            Elem *atual = li;
+            while(atual->prox != li)//procura o último
+                atual = atual->prox;
+            no->prox = li;
+            atual->prox = no;
+            li = no;
+            return li;
+        }
+        Elem *ant = li, *atual = li->prox;
+        while(atual != li && atual->valor < val){
+            ant = atual;
+            atual = atual->prox;
+        }
+        ant->prox = no;
+        no->prox = atual;
+        return li;
+    }
+}
 
 Elem* remove_lista_inicio(Elem* li){
     if(li == NULL)
