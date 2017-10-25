@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1508431799 source:c:\users\julian\documents\c++ workspace\listacircular\listacirc.cpp
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+	"ListaCirc.h"
+
+1508431596 c:\users\julian\documents\c++ workspace\listacircular\listacirc.h
+
+1474662179 source:c:\users\julian\documents\c++ workspace\listacircular\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"ListaCirc.h"
+
